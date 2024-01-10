@@ -1,10 +1,13 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { purgeCss } from 'vite-plugin-tailwind-purgecss';
+import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from 'vite';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svelte()],
-  server: {
-    host: '0.0.0.0'
-  }
-})
+	plugins: [sveltekit(), purgeCss({
+			safelist: {
+				// any selectors that begin with "hljs-" will not be purged
+				greedy: [/^hljs-/],
+			},
+		}),
+	],
+});
